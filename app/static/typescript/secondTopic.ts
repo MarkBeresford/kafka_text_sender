@@ -2,7 +2,7 @@ import { getAllHistoricData, firstTopic, secondTopic, addKafkaDataToConversation
 
 window.onload = () => {
     getAllHistoricData(2)
-    getDataFromTopic('/getTopicDataFromSender1', secondTopic)
+    getDataFromTopic('/getTopicData/1', secondTopic)
 }
 
 const form: HTMLFormElement = document.querySelector('#secondUserForm');
