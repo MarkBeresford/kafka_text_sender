@@ -1,0 +1,26 @@
+{
+  "devDependencies": {
+    "@babel/core": "^7.0.0-0",
+    "@babel/preset-env": "^7.12.11",
+    "@babel/preset-react": "^7.12.10",
+    "@types/jquery": "^3.5.5",
+    "jquery": "^3.5.1",
+    "ts-loader": "^5.4.5",
+    "typescript": "^3.0.0",
+    "webpack": "^4.0.0",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.1.14"
+  },
+  "name": "app",
+  "version": "1.0.0",
+  "description": "kafka message app",
+  "main": "index.js",
+  "scripts": {
+    "watch": "watch webpack"
+  },
+  "author": "Mark Beresford",
+  "dependencies": {
+    "@types/jquery": "^3.5.5",
+    "watch": "^1.0.2"
+  }
+}
