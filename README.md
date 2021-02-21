@@ -15,9 +15,13 @@ CONTAINER ID   IMAGE                      COMMAND                  CREATED      
 cf72db5338be   bitnami/zookeeper:latest   "/opt/bitnami/script…"   2 days ago     Up 2 minutes        2888/tcp, 3888/tcp, 0.0.0.0:2181->2181/tcp, 8080/tcp   kafka_text_sender_zookeeper_1
 ```
 
-If there is an error similar to: Error while creating ephemeral at /brokers/ids/1001, node already exists and owner '<id>' does not match current session '<id>' run `docker-compose rm -svf` before running the docker compose command.
+If there is an error similar to: `Error while creating ephemeral at /brokers/ids/1001, node already exists and owner '<id>' does not match current session '<id>' ` run `docker-compose rm -svf` before running the docker compose command.
 
 When the three containers have spun up navigate to `localhost:5000` to see the project root.
 
-For deving:
-`npm install -g npm@latest` -> node packages, `npm run watch`, start dev server `flask run`  
+For deving run the following commands:
+* `cd app`
+* `npm install` -> this install the requiered node modules node packages
+* `npm run watch` -> automatically updates the javascript used by the application when changes are made in the typescript `static` folder
+* `flask run` -> runs the dev server
+* Navigate to `localhost:5000`
