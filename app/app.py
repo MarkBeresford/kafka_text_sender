@@ -8,31 +8,28 @@ kafka_client = connect_to_kafka_client()
 
 all_conversation_data = []
 
+# Kafka Consumers
 conversation_consumer = create_kafka_consumer(kafka_client, "conversation")
 sender_1_consumer = create_kafka_consumer(kafka_client, "sender_1")
 sender_2_consumer = create_kafka_consumer(kafka_client, "sender_2")
 
+# Kafka Producers
 conversation_producer = create_kafka_producer(kafka_client, "conversation")
 sender_1_producer = create_kafka_producer(kafka_client, "sender_1")
 sender_2_producer = create_kafka_producer(kafka_client, "sender_2")
 
 
 @app.route('/', methods=['GET', 'POST'])
-def conversation():
-    if flask.request.method == 'GET':
-        return render_template('main.html')
-    elif flask.request.method == 'POST':
-        return render_template('main.html')
+def return_main_conversation_page():
+    return render_template('main.html')
 
 
 @app.route('/UserSendData/<user>', methods=['POST', 'GET'])
 def second_user_send_data(user):
     if flask.request.method == 'GET':
         if user == '1':
-            print("first_topic")
             return render_template('first_topic.html')
         else:
-            print("second_topic")
             return render_template('second_topic.html')
     elif flask.request.method == 'POST':
         data = request.form['textToSend']
@@ -57,16 +54,16 @@ def get_second_topic_data(user):
 
 @app.route('/getAllData', methods=['GET'])
 def get_all_data():
-    all_data = [msg.value.decode("utf-8") for msg in conversation_consumer]
-    all_conversation_data.append(all_data)
+    all_conversation_data = consume_all_data_on_conversation_history(conversation_consumer)
     return {"data": all_conversation_data}
 
 
 @app.route('/recreateAllTopics', methods=['GET'])
 def recreate_all_topics():
+    consume_all_data_on_conversation_history(conversation_consumer)
     all_conversation_data.clear()
-    print(all_conversation_data)
     return render_template('main.html')
+
 
 if __name__ == '__main__':
     app.run(port=5000, host='0.0.0.0')
