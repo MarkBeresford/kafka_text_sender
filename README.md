@@ -1,4 +1,4 @@
-# kafka Text Sender
+# Kafka Text Sender
 
 This is a simple messaging applicationg comprised of a typescript frount end with a kafa backend.
 

@@ -1,7 +1,7 @@
 from flask.app import *
 import time
 from pykafka.client import KafkaClient
-from pykafka.exceptions import NoBrokersAvailableError, LeaderNotFoundError
+from pykafka.exceptions import NoBrokersAvailableError
 
 
 def create_kafka_consumer(client, topic_name):
@@ -17,17 +17,23 @@ def create_kafka_producer(client, topic_name):
 
 
 def get_topic_data(consumer):
-    cosumered_data = consumer.consume()
-    if cosumered_data is not None:
-        return jsonify(data=cosumered_data.value.decode("utf-8"))
-    time.sleep(2)
+    while True:
+        consumed_data = consumer.consume()
+        if consumed_data is not None:
+            return jsonify(data=consumed_data.value.decode("utf-8"))
+
+
+def consume_all_data_on_conversation_history(conversation_consumer):
+    all_data = [msg.value.decode("utf-8") for msg in conversation_consumer]
+    all_conversation_data = all_data
+    return {"data": all_conversation_data}
+
 
 
 def connect_to_kafka_client():
     kafka_client_address = os.getenv("KAFKA_ADVERTISED_HOST_NAME")
     kafka_port = os.getenv("KAFKA_PORT")
     client_address = kafka_client_address + ":" + kafka_port
-    print("Conecting to kafka on: " + client_address)
     while True:
         time.sleep(5)
         try:
